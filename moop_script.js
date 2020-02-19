@@ -1,3 +1,6 @@
+var place_reponse = document.querySelector('.response-place')
+
+
 function myFunction() {
     document.getElementById("xminHolder").innerHTML = "";
     document.getElementById("xmaxHolder").innerHTML = "";
@@ -55,6 +58,10 @@ function sendRequest() {
             console.log(data);
             // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
             //resultElement.innerHTML = JSON.stringify(data["x"]);
+
+            //libera espaço para a resposta seja exibida
+            place_reponse.classList.toggle("response-place");
+
             var trace3 = {
                 x: data["fx"][0],
                 y: data["fx"][1],
