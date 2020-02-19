@@ -56,13 +56,10 @@ output {
     color: navy;
 }
 
-
-/*.main-svg {
-    border-radius: 10px;
-    border: 1px solid black;
-    box-shadow: black;
+#xminHolder input[type=number],
+#xmaxHolder input[type=number] {
+    margin: 0 5px;
 }
-*/
 
 .control-panel {
     background-color: rgb(230, 250, 229);

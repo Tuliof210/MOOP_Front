@@ -6,10 +6,14 @@ function myFunction() {
     var n_value = document.getElementById("n").value;
     for (let i = 1; i <= n_value; i++) {
         document.getElementById("xminHolder").innerHTML += `
-        <input class="form-control col-xs-3" type="number" id="x_min_${i}" name="x_min_1" value="-10">
+        <div class="col-xs-3">
+            <input class="form-control col-xs-3" type="number" id="x_min_${i}" name="x_min_1" value="-10">
+        </div>
         `;
         document.getElementById("xmaxHolder").innerHTML += `
-        <input class="form-control" type="number" id="x_max_${i}" name="x_max_1" value="10">
+        <div class="col-xs-3">
+            <input class="form-control" type="number" id="x_max_${i}" name="x_max_1" value="10">
+        </div>
         `;
     }
 }
