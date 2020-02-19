@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Fredoka+One|Monoton|DM+Sans|Audiowide|Poiret+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One|Black+Ops+One|Monoton|DM+Sans|Audiowide|Poiret+One&display=swap');
 * {
     font-family: 'DM Sans', sans-serif;
     /*font-family: 'Poiret One', cursive;
@@ -25,18 +25,20 @@ h1 {
     text-align: center;
 }
 
-input[type=range] {
-    appearance: none;
-}
-
 input[type=number] {
     opacity: 1;
     width: 90px;
 }
 
-input[type=text]:focus {
+input[type=text]:focus,
+input[type=number]:focus {
     border: 1px solid greenyellow;
     box-shadow: 0 0 5px 0 greenyellow;
+}
+
+input[type=text],
+input[type=number] {
+    border: 1px solid greenyellow;
 }
 
 button {
@@ -50,21 +52,36 @@ button {
     border-radius: 10px;
 }
 
-.main-svg {
+output {
+    color: navy;
+}
+
+
+/*.main-svg {
     border-radius: 10px;
     border: 1px solid black;
     box-shadow: black;
 }
+*/
 
 .control-panel {
+    background-color: rgb(230, 250, 229);
     margin-top: 20px;
     padding: 15px 5px;
     border-radius: 5px;
-    border: 2px solid #777;
+    border: 2px solid rgb(17, 129, 55);
 }
 
 .response-place {
     display: none;
+}
+
+.form-num {
+    display: inline;
+}
+
+#solve {
+    margin-top: 25px;
 }
 
 @media screen and (max-width: 576px) {

@@ -1,13 +1,16 @@
 var place_reponse = document.querySelector('.response-place')
 
-
 function myFunction() {
     document.getElementById("xminHolder").innerHTML = "";
     document.getElementById("xmaxHolder").innerHTML = "";
     var n_value = document.getElementById("n").value;
     for (let i = 1; i <= n_value; i++) {
-        document.getElementById("xminHolder").innerHTML += " <input type=\"number\" id=\"x_min_" + i + "\" name=\"x_min_" + 1 + "\" value=\"-10\">";
-        document.getElementById("xmaxHolder").innerHTML += " <input type=\"number\" id=\"x_max_" + i + "\" name=\"x_max_" + 1 + "\" value=\"10\">";
+        document.getElementById("xminHolder").innerHTML += `
+        <input class="form-control col-xs-3" type="number" id="x_min_${i}" name="x_min_1" value="-10">
+        `;
+        document.getElementById("xmaxHolder").innerHTML += `
+        <input class="form-control" type="number" id="x_max_${i}" name="x_max_1" value="10">
+        `;
     }
 }
 
@@ -80,10 +83,14 @@ function sendRequest() {
             Plotly.newPlot('response_plot', data_plot, layout);
         }
         xhr.onerror = function(e) {
+            //libera espaço para a resposta seja exibida
+            place_reponse.classList.toggle("response-place");
             console.log("Ooops, não funcionou: ", e)
             errorElement.innerHTML = "Não funcionou";
         }
     } catch (e) {
+        //libera espaço para a resposta seja exibida
+        place_reponse.classList.toggle("response-place");
         console.log('Deu merda', e);
     }
 }

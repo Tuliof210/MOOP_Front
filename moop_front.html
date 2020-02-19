@@ -35,33 +35,53 @@
                 </div>
             </form>
         </div>
+        <div class="content row control-panel">
+            <label for="example-number-input" class="col-form-label">Lower bounds:</label>
+            <div id="xminHolder">
+                <div class="col-xs-3">
+                    <input class="form-control col-xs-3" type="number" id="x_min_1" name="x_min_1" value="-10">
+                </div>
+                <div class="col-xs-3">
+                    <input class="form-control col-xs-3" type="number" id="x_min_2" name="x_min_2" value="-10">
+                </div>
+            </div>
+            <label for="example-number-input" class="col-form-label">Upper bounds:</label>
+            <div id="xmaxHolder">
+                <div class="col-xs-3">
+                    <input class="form-control col-xs-3" type="number" id="x_max_1" name="x_max_1" value="10">
+                </div>
+                <div class="col-xs-3">
+                    <input class="form-control col-xs-3" type="number" id="x_max_2" name="x_max_2" value="10">
+                </div>
+            </div>
+        </div>
+        <div class="content row control-panel">
+            <form class="col-12">
+                <label class="col-form-label">Maximum iterations:</label>
+                <input class="form-control" type="number" id="n_max" name="n_max" value="200">
+                <label class="col-form-label">Numerical precision:</label>
+                <input class="form-control" type="number" id="eps" name="eps" value="1e-6">
+                <button type="button" id="solve" class="btn btn-outline-success btn-lg btn-block" name="button" onclick="sendRequest()">Solve</button>
+            </form>
+        </div>
 
-        <br> Lower bounds:
-        <br>
-        <p id="xminHolder">
-            <input type="number" id="x_min_1" name="x_min_1" value="-10">
-            <input type="number" id="x_min_2" name="x_min_2" value="-10">
-        </p>
-        <br> Upper bounds:
-        <br>
-        <p id="xmaxHolder">
-            <input type="number" id="x_max_1" name="x_max_1" value="10">
-            <input type="number" id="x_max_2" name="x_max_2" value="10">
-        </p>
-        <br> Maximum iterations:
-        <input type="number" id="n_max" name="n_max" value="200">
-        <br>
-        <br> Numerical precision:
-        <input type="number" id="eps" name="eps" value="1e-6">
-        <br>
-        <br>
-        <button type="button" name="button" onclick="sendRequest()">Solve</button>
         <br>
         <br>
         <div class="response-place">
             <div id="response" style="color: green" height:1000px></div>
             <div id="response_plot" style="width:100%;height:400px"></div>
             <div id="error" style="color: red"></div>
+        </div>
+
+        <div class="content row">
+            <div class="col-xs-3" style="padding-right: 5px;">
+                <label class="col-form-label">Maximum iterations:</label>
+                <input class="form-control" type="number" id="n_max" name="n_max" value="200">
+            </div>
+            <div class="col-xs-3" style="padding-right: 5px;">
+                <label class="col-form-label">Numerical precision:</label>
+                <input class="form-control" type="number" id="eps" name="eps" value="1e-6">
+            </div>
         </div>
 
     </main>
