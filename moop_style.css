@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One|Monoton|DM+Sans|Audiowide|Poiret+One&display=swap');
 * {
+    font-family: 'DM Sans', sans-serif;
+    /*font-family: 'Poiret One', cursive;
+    /*font-family: 'Fredoka One', cursive;*/
+    font-weight: bolder;
     margin: 0;
     padding: 0;
     border: 0;
@@ -9,13 +14,19 @@ main {
     width: 800px;
     margin: auto;
     padding: 10px 30px;
-    background-color: #c4dae9;
+    /*background-color: #c4dae9;*/
 }
 
 h1 {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Audiowide', cursive;
+    /*font-family: 'Monoton', cursive;
+    /*font-family: Arial, Helvetica, sans-serif;*/
     margin-bottom: 45px;
     text-align: center;
+}
+
+input[type=range] {
+    appearance: none;
 }
 
 input[type=number] {
@@ -23,15 +34,9 @@ input[type=number] {
     width: 90px;
 }
 
-input[type=text],
-select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+input[type=text]:focus {
+    border: 1px solid greenyellow;
+    box-shadow: 0 0 5px 0 greenyellow;
 }
 
 button {
@@ -43,4 +48,29 @@ button {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 10px;
+}
+
+.main-svg {
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: black;
+}
+
+.control-panel {
+    margin-top: 20px;
+    padding: 15px 5px;
+    border-radius: 5px;
+    border: 2px solid #777;
+}
+
+.response-palce {
+    display: none;
+}
+
+@media screen and (max-width: 576px) {
+    main {
+        width: 100%;
+        margin: 3px;
+        padding: 10px 30px;
+    }
 }
