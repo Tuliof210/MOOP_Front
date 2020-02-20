@@ -31,48 +31,48 @@ function sendRequest() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://ii51sclb36.execute-api.us-east-1.amazonaws.com/default/Moop");
     xhr.setRequestHeader('Content-Type', 'application/json');
-    try {
-        const n_value = parseInt(document.getElementById('n').value);
-        const n_samples = parseInt(document.getElementById('ns').value);
-        const function_value1 = document.getElementById('func1').value;
-        const function_value2 = document.getElementById('func2').value;
-        const n_max_value = parseInt(document.getElementById('n_max').value);
-        const eps_value = parseFloat(document.getElementById('eps').value);
 
-        let x_min_value = [];
-        let x_max_value = [];
-        for (let i = 1; i <= n_value; i++) {
-            if (document.getElementById('x_min_' + i).value) {
-                x_min_value.push(parseFloat(document.getElementById('x_min_' + i).value));
-            }
+    const n_value = parseInt(document.getElementById('n').value);
+    const n_samples = parseInt(document.getElementById('ns').value);
+    const function_value1 = document.getElementById('func1').value;
+    const function_value2 = document.getElementById('func2').value;
+    const n_max_value = parseInt(document.getElementById('n_max').value);
+    const eps_value = parseFloat(document.getElementById('eps').value);
 
-            if (document.getElementById('x_max_' + i).value) {
-                x_max_value.push(parseFloat(document.getElementById('x_max_' + i).value));
-            }
+    let x_min_value = [];
+    let x_max_value = [];
+    for (let i = 1; i <= n_value; i++) {
+        if (document.getElementById('x_min_' + i).value) {
+            x_min_value.push(parseFloat(document.getElementById('x_min_' + i).value));
         }
 
-        xhr.send(JSON.stringify({
-            n: n_value,
-            n_samples: n_samples,
-            function_1: function_value1,
-            function_2: function_value2,
-            x_min: x_min_value,
-            x_max: x_max_value,
-            n_max: n_max_value,
-            eps: eps_value
-        }));
-        console.log('oioioi');
+        if (document.getElementById('x_max_' + i).value) {
+            x_max_value.push(parseFloat(document.getElementById('x_max_' + i).value));
+        }
+    }
 
-        xhr.onload = function() {
-            console.log("Response")
-            console.log(this.responseText);
-            var data = JSON.parse(this.responseText);
-            console.log(data);
-            // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
-            //resultElement.innerHTML = JSON.stringify(data["x"]);
+    xhr.send(JSON.stringify({
+        n: n_value,
+        n_samples: n_samples,
+        function_1: function_value1,
+        function_2: function_value2,
+        x_min: x_min_value,
+        x_max: x_max_value,
+        n_max: n_max_value,
+        eps: eps_value
+    }));
+    console.log('oioioi');
 
+    xhr.onload = function() {
+        console.log("Response")
+        console.log(this.responseText);
+        var data = JSON.parse(this.responseText);
+        console.log(data);
+        // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
+        //resultElement.innerHTML = JSON.stringify(data["x"]);
 
-
+        //melhor usar o try catch depois da resposta da requisição
+        try {
             var trace3 = {
                 x: data["fx"][0],
                 y: data["fx"][1],
@@ -92,57 +92,65 @@ function sendRequest() {
 
             //libera espaço para a resposta seja exibida
             place_reponse.classList.remove("response-place");
-        }
-        xhr.onerror = function(e) {
+
+        } catch (e) {
             let errobody = document.querySelector('main')
+
             errobody.innerHTML += `
-                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Houve um erro de renderização. Verifique os parametros fornecidos
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `
+                //Modal irá aparecer sem necessidade de um botão
+            $(document).ready(function(e) {
+                jQuery('#myModal').modal();
+            });
+            console.log('Deu merda', e);
+        }
+    }
+    xhr.onerror = function(e) {
+        let errobody = document.querySelector('main')
+
+        errobody.innerHTML += `
+        <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        Houve um erro inesperado
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-                </div>
-            `
+            </div>
+        </div>`;
 
-            console.log("Ooops, não funcionou: ", e)
-            errorElement.innerHTML = "Não funcionou";
-        }
-    } catch (e) {
-        let errobody = document.querySelector('main')
-        errobody.innerHTML += `
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-                </div>
-            </div>
-            </div>
-        `
-        console.log('Deu merda', e);
+        //Modal irá aparecer sem necessidade de um botão
+        $(document).ready(function(e) {
+            jQuery('#myModal').modal();
+        });
+
+        console.log("Ooops, não funcionou: ", e)
     }
 }

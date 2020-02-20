@@ -4,6 +4,7 @@
 <head>
     <title>MOOP - Multiobjective Optimization</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="moop_style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -62,7 +63,7 @@
             <input class="form-control" type="number" id="n_max" name="n_max" value="200">
             <label class="col-form-label">Numerical precision:</label>
             <input class="form-control" type="number" id="eps" name="eps" value="1e-6">
-            <button type="button" id="solve" class="btn btn-primary btn-lg btn-block" name="button" onclick="sendRequest()">Solve</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="solve" name="button" onclick="sendRequest()" data-toggle="modal" data-target="#staticBackdrop">Solve</button>
         </div>
         <div class="response-place">
             <div id="response" style="color: green" height:1000px></div>

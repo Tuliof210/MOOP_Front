@@ -67,6 +67,10 @@ output {
     display: inline;
 }
 
+.modal .fade .show {
+    display: block;
+}
+
 #solve {
     margin-top: 25px;
 }
