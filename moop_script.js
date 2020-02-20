@@ -1,4 +1,4 @@
-var place_reponse = document.querySelector('.response-place')
+var place_response = document.querySelector('.response-place')
 
 function myFunction() {
     document.getElementById("xminHolder").innerHTML = "";
@@ -7,12 +7,12 @@ function myFunction() {
     for (let i = 1; i <= n_value; i++) {
         document.getElementById("xminHolder").innerHTML += `
         <div class="col-xs-3">
-            <input class="form-control col-xs-3" type="number" id="x_min_${i}" name="x_min_1" value="-10" min="-9999" max="9999">
+            <input class="form-control col-xs-3" type="number" id="x_min_${i}" name="x_min_1" value="-10">
         </div>
         `;
         document.getElementById("xmaxHolder").innerHTML += `
         <div class="col-xs-3">
-            <input class="form-control" type="number" id="x_max_${i}" name="x_max_1" value="10" min="-9999" max="9999">
+            <input class="form-control" type="number" id="x_max_${i}" name="x_max_1" value="10">
         </div>
         `;
     }
@@ -20,8 +20,9 @@ function myFunction() {
 
 function sendRequest() {
 
-    //reseta o espaço da resposta
-    place_reponse.classList.add("response-place");
+    if (!place_response.classList.contains('response-place')) {
+        place_response.classList.add('response-place')
+    }
 
     let resultElement = document.getElementById('response');
     let errorElement = document.getElementById('error');
@@ -62,16 +63,14 @@ function sendRequest() {
         eps: eps_value
     }));
     console.log('oioioi');
-
-    xhr.onload = function() {
+    xhr.onload = async function() {
         console.log("Response")
         console.log(this.responseText);
-        var data = JSON.parse(this.responseText);
+        var data = await JSON.parse(this.responseText);
         console.log(data);
         // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
         //resultElement.innerHTML = JSON.stringify(data["x"]);
 
-        //melhor usar o try catch depois da resposta da requisição
         try {
             var trace3 = {
                 x: data["fx"][0],
@@ -88,15 +87,44 @@ function sendRequest() {
                 },
             };
             var data_plot = [trace3];
-            Plotly.newPlot('response_plot', data_plot, layout);
-
-            //libera espaço para a resposta seja exibida
-            place_reponse.classList.remove("response-place");
+            //libera espaço para a resposta seja exibida (tem que liberar antes de enviar os dados para a div)
+            place_response.classList.remove("response-place")
+            Plotly.newPlot('response_plot', data_plot, layout)
 
         } catch (e) {
-            let errobody = document.querySelector('main')
 
+            let errobody = document.querySelector('main')
             errobody.innerHTML += `
+                <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Houve um erro de renderização. Verifique os parametros fornecidos
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `
+                //Modal irá aparecer sem necessidade de um botão
+            $(document).ready(function(e) {
+                jQuery('#myModal').modal();
+            });
+            console.log(e);
+        }
+    }
+    xhr.onerror = function(e) {
+        let errobody = document.querySelector('main')
+
+        errobody.innerHTML += `
             <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -107,44 +135,14 @@ function sendRequest() {
                             </button>
                         </div>
                         <div class="modal-body">
-                            Houve um erro de renderização. Verifique os parametros fornecidos
+                            Houve um erro inesperado
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
-            </div>
-                `
-                //Modal irá aparecer sem necessidade de um botão
-            $(document).ready(function(e) {
-                jQuery('#myModal').modal();
-            });
-            console.log('Deu merda', e);
-        }
-    }
-    xhr.onerror = function(e) {
-        let errobody = document.querySelector('main')
-
-        errobody.innerHTML += `
-        <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Houve um erro inesperado
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>`;
+            </div>`;
 
         //Modal irá aparecer sem necessidade de um botão
         $(document).ready(function(e) {
