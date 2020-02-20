@@ -17,39 +17,29 @@ main {
     /*background-color: #c4dae9;*/
 }
 
-h1 {
+h1,
+h2 {
     font-family: 'Audiowide', cursive;
-    /*font-family: 'Monoton', cursive;
-    /*font-family: Arial, Helvetica, sans-serif;*/
     margin-bottom: 45px;
     text-align: center;
 }
 
 input[type=number] {
     opacity: 1;
-    width: 90px;
+    width: 80px;
+    font-size: smaller;
+    padding-left: 8px;
 }
 
 input[type=text]:focus,
 input[type=number]:focus {
-    border: 1px solid greenyellow;
-    box-shadow: 0 0 5px 0 greenyellow;
+    border: 1px solid rgb(168, 151, 0);
+    box-shadow: 0 0 5px 0 rgb(224, 255, 47);
 }
 
 input[type=text],
 input[type=number] {
-    border: 1px solid greenyellow;
-}
-
-button {
-    background-color: #8ead90;
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 10px;
+    border: 1px solid rgb(168, 151, 0);
 }
 
 output {
@@ -62,11 +52,11 @@ output {
 }
 
 .control-panel {
-    background-color: rgb(230, 250, 229);
+    background-color: rgb(255, 248, 185);
     margin-top: 20px;
     padding: 15px 5px;
     border-radius: 5px;
-    border: 2px solid rgb(17, 129, 55);
+    border: 2px solid rgb(168, 151, 0);
 }
 
 .response-place {
@@ -81,10 +71,24 @@ output {
     margin-top: 25px;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 1024px) {
     main {
         width: 100%;
         margin: 3px;
         padding: 10px 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        width: 100%;
+        margin: 3px;
+        padding: 10px 30px;
+    }
+    h2 {
+        font-size: 1vw;
+        text-align: center;
+        max-width: 300px;
+        margin: auto;
     }
 }
