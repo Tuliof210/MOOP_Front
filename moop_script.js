@@ -1,6 +1,10 @@
 var place_response = document.querySelector('.response-place')
 var closemodal = document.querySelector('#closemodal')
 
+google.charts.load('current', {
+    'packages': ['corechart']
+});
+
 closemodal.addEventListener('click', AddResponsePlace())
 
 function AddResponsePlace() {
@@ -33,8 +37,8 @@ function sendRequest() {
 
     let resultElement = document.getElementById('response');
     let errorElement = document.getElementById('error');
-    resultElement.innerHTML = null;
-    errorElement.innerHTML = null;
+    //resultElement.innerHTML = null;
+    //errorElement.innerHTML = null;
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://ii51sclb36.execute-api.us-east-1.amazonaws.com/default/Moop");
@@ -72,12 +76,40 @@ function sendRequest() {
 
     xhr.onload = async function() {
 
-        var data = await JSON.parse(this.responseText);
+        var datag = await JSON.parse(this.responseText);
         // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
         //resultElement.innerHTML = JSON.stringify(data["x"]);
 
+        console.log(datag)
+        console.log(this.responseText)
         try {
-            var trace3 = {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Age', 'Weight'],
+                [8, 12],
+                [4, 5.5],
+                [11, 14],
+                [4, 5],
+                [3, 3.5],
+                [6.5, 7]
+            ]);
+
+            var options = {
+                title: 'Pareto front',
+                hAxis: {
+                    title: 'f' + '1'.sub() + '(x)'
+                },
+                vAxis: {
+                    title: 'f' + '2'.sub() + '(x)'
+                },
+                legend: 'none'
+            };
+
+            var chart = new google.visualization.ScatterChart(document.getElementById('response_plot'));
+
+            chart.draw(data, options);
+
+            /*var trace3 = {
                 x: data["fx"][0],
                 y: data["fx"][1],
                 mode: 'markers'
@@ -91,11 +123,11 @@ function sendRequest() {
                     title: 'f' + '2'.sub() + '(x)'
                 },
             };
-            var data_plot = [trace3];
+            var data_plot = [trace3];*/
             //libera espaço para a resposta seja exibida (tem que liberar antes de enviar os dados para a div)
             place_response.classList.remove("response-place")
-            Plotly.newPlot('response_plot', data_plot, layout)
-            callback()
+                //Plotly.newPlot('response_plot', data_plot, layout)
+            callback();
 
         } catch (e) {
 
