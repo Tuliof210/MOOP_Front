@@ -76,23 +76,32 @@ function sendRequest() {
 
     xhr.onload = async function() {
 
-        var datag = await JSON.parse(this.responseText);
+        var data = await JSON.parse(this.responseText);
         // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
         //resultElement.innerHTML = JSON.stringify(data["x"]);
 
-        console.log(datag)
         console.log(this.responseText)
+        console.log(data)
+
+        var line_x = data.fx[0]
+        var line_y = data.fx[1]
+
+        var entrada_grafico = [];
+        entrada_grafico.push(['x', 'y'])
+
+        for (let i in line_x) {
+            let x = []
+            x.push(line_x[i])
+            x.push(line_y[i])
+            entrada_grafico.push(x)
+        }
+
+        console.log(line_x)
+        console.log(line_y)
+
         try {
 
-            var data = google.visualization.arrayToDataTable([
-                ['Age', 'Weight'],
-                [8, 12],
-                [4, 5.5],
-                [11, 14],
-                [4, 5],
-                [3, 3.5],
-                [6.5, 7]
-            ]);
+            var grafico = google.visualization.arrayToDataTable(entrada_grafico);
 
             var options = {
                 title: 'Pareto front',
@@ -107,26 +116,9 @@ function sendRequest() {
 
             var chart = new google.visualization.ScatterChart(document.getElementById('response_plot'));
 
-            chart.draw(data, options);
+            chart.draw(grafico, options);
 
-            /*var trace3 = {
-                x: data["fx"][0],
-                y: data["fx"][1],
-                mode: 'markers'
-            };
-            var layout = {
-                title: 'Pareto front',
-                xaxis: {
-                    title: 'f' + '1'.sub() + '(x)'
-                },
-                yaxis: {
-                    title: 'f' + '2'.sub() + '(x)'
-                },
-            };
-            var data_plot = [trace3];*/
-            //libera espaço para a resposta seja exibida (tem que liberar antes de enviar os dados para a div)
             place_response.classList.remove("response-place")
-                //Plotly.newPlot('response_plot', data_plot, layout)
             callback();
 
         } catch (e) {

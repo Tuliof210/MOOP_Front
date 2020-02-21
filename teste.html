@@ -23,34 +23,28 @@
         }
 
         function drawChart() {
+
+            //montando o array com os dados
             var data = google.visualization.arrayToDataTable([
-                ['Age', 'Weight'],
-                [8, 12],
-                [4, 5.5],
-                [11, 14],
-                [4, 5],
-                [3, 3.5],
-                [6.5, 7]
+                ['Nome', 'Tickets'],
+                ['Jose', 1000],
+                ['Pedro', 1170],
+                ['Joao', 660],
+                ['Alberto', 1030]
             ]);
-
-            var options = {
-                title: 'Age vs. Weight comparison',
+            //opções para o gráfico linhas
+            var options1 = {
+                title: 'Tickets x Tecnico',
                 hAxis: {
-                    title: 'Age',
-                    minValue: 0,
-                    maxValue: 15
-                },
-                vAxis: {
-                    title: 'Weight',
-                    minValue: 0,
-                    maxValue: 15
-                },
-                legend: 'none'
+                    title: 'Tecnico',
+                    titleTextStyle: {
+                        color: 'red'
+                    }
+                } //legenda na horizontal
             };
-
-            var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-
-            chart.draw(data, options);
+            //instanciando e desenhando o gráfico linhas
+            var linhas = new google.visualization.LineChart(document.getElementById('chart_div'));
+            linhas.draw(data, options1);
         }
     </script>
     <button type="button" id="teste" name="button" onclick="drawChart()">teste</button>
