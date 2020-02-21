@@ -85,7 +85,7 @@ function sendRequest() {
         console.log(data)
 
         try {
-
+            //colocar o try antes de usar os dados!!
             var line_x = data.fx[0]
             var line_y = data.fx[1]
 
