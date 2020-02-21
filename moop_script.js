@@ -95,6 +95,7 @@ function sendRequest() {
             //libera espaço para a resposta seja exibida (tem que liberar antes de enviar os dados para a div)
             place_response.classList.remove("response-place")
             Plotly.newPlot('response_plot', data_plot, layout)
+            callback()
 
         } catch (e) {
 
@@ -118,4 +119,9 @@ function sendRequest() {
 
         console.log("Ooops, não funcionou: ", e)
     }
+}
+
+function callback() {
+    var a = document.getElementById('solve');
+    window.location.href = '#test';
 }
