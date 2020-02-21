@@ -33,6 +33,7 @@ function myFunction() {
 
 function sendRequest() {
 
+    showloader();
     AddResponsePlace();
 
     let resultElement = document.getElementById('response');
@@ -83,23 +84,23 @@ function sendRequest() {
         console.log(this.responseText)
         console.log(data)
 
-        var line_x = data.fx[0]
-        var line_y = data.fx[1]
-
-        var entrada_grafico = [];
-        entrada_grafico.push(['x', 'y'])
-
-        for (let i in line_x) {
-            let x = []
-            x.push(line_x[i])
-            x.push(line_y[i])
-            entrada_grafico.push(x)
-        }
-
-        console.log(line_x)
-        console.log(line_y)
-
         try {
+
+            var line_x = data.fx[0]
+            var line_y = data.fx[1]
+
+            var entrada_grafico = [];
+            entrada_grafico.push(['x', ''])
+
+            for (let i in line_x) {
+                let x = []
+                x.push(line_x[i])
+                x.push(line_y[i])
+                entrada_grafico.push(x)
+            }
+
+            console.log(line_x)
+            console.log(line_y)
 
             var grafico = google.visualization.arrayToDataTable(entrada_grafico);
 
@@ -111,7 +112,9 @@ function sendRequest() {
                 vAxis: {
                     title: 'f' + '2'.sub() + '(x)'
                 },
-                legend: 'none'
+                legend: 'none',
+                width: 740,
+                height: 400
             };
 
             var chart = new google.visualization.ScatterChart(document.getElementById('response_plot'));
@@ -119,13 +122,15 @@ function sendRequest() {
             chart.draw(grafico, options);
 
             place_response.classList.remove("response-place")
-            callback();
+            showloader();
+            callback()
 
         } catch (e) {
 
             let errobody = document.querySelector('.modal-body')
             errobody.innerHTML = 'There was a rendering error'
                 //Modal irá aparecer sem necessidade de um botão
+            showloader();
             $(document).ready(function(e) {
                 jQuery('#myModal').modal();
             });
@@ -137,6 +142,7 @@ function sendRequest() {
 
         errobody.innerHTML = 'There was an unexpected error'
             //Modal irá aparecer sem necessidade de um botão
+        showloader();
         $(document).ready(function(e) {
             jQuery('#myModal').modal();
         });
@@ -146,6 +152,22 @@ function sendRequest() {
 }
 
 function callback() {
-    var a = document.getElementById('solve');
+    let a = document.getElementById('solve');
     window.location.href = '#test';
+}
+
+function showloader() {
+    let a = document.getElementById('solve');
+
+    if (a.innerHTML == 'Solve') {
+        a.innerHTML = `
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    `
+    } else {
+        a.innerHTML = 'Solve'
+    }
 }
