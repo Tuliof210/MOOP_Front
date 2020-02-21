@@ -1,4 +1,13 @@
 var place_response = document.querySelector('.response-place')
+var closemodal = document.querySelector('#closemodal')
+
+closemodal.addEventListener('click', AddResponsePlace())
+
+function AddResponsePlace() {
+    if (!place_response.classList.contains('response-place')) {
+        place_response.classList.add('response-place')
+    }
+}
 
 function myFunction() {
     document.getElementById("xminHolder").innerHTML = "";
@@ -20,9 +29,7 @@ function myFunction() {
 
 function sendRequest() {
 
-    if (!place_response.classList.contains('response-place')) {
-        place_response.classList.add('response-place')
-    }
+    AddResponsePlace();
 
     let resultElement = document.getElementById('response');
     let errorElement = document.getElementById('error');
@@ -62,12 +69,10 @@ function sendRequest() {
         n_max: n_max_value,
         eps: eps_value
     }));
-    console.log('oioioi');
+
     xhr.onload = async function() {
-        console.log("Response")
-        console.log(this.responseText);
+
         var data = await JSON.parse(this.responseText);
-        console.log(data);
         // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
         //resultElement.innerHTML = JSON.stringify(data["x"]);
 
@@ -93,27 +98,8 @@ function sendRequest() {
 
         } catch (e) {
 
-            let errobody = document.querySelector('main')
-            errobody.innerHTML += `
-                <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                Houve um erro de renderização. Verifique os parametros fornecidos
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                `
+            let errobody = document.querySelector('.modal-body')
+            errobody.innerHTML = 'There was a rendering error'
                 //Modal irá aparecer sem necessidade de um botão
             $(document).ready(function(e) {
                 jQuery('#myModal').modal();
@@ -122,29 +108,10 @@ function sendRequest() {
         }
     }
     xhr.onerror = function(e) {
-        let errobody = document.querySelector('main')
+        let errobody = document.querySelector('.modal-body')
 
-        errobody.innerHTML += `
-            <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Houve um erro inesperado
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-
-        //Modal irá aparecer sem necessidade de um botão
+        errobody.innerHTML = 'There was an unexpected error'
+            //Modal irá aparecer sem necessidade de um botão
         $(document).ready(function(e) {
             jQuery('#myModal').modal();
         });
