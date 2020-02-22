@@ -141,8 +141,14 @@ function showloader() {
     }
 }
 
+//torna o grafico responsivo
 window.onresize = function() {
-    drawChart()
+    //evita chamar drachart sem necessidade
+    if (data != undefined) {
+        if (data.message == undefined) {
+            drawChart()
+        }
+    }
 }
 
 
@@ -162,7 +168,7 @@ function drawChart() {
 
     var grafico = google.visualization.arrayToDataTable(entrada_grafico);
 
-    var mainWidth = document.getElementsByTagName('main')
+    var mainWidth = document.getElementsByTagName('main') //grava o main
 
     var options = {
         title: 'Pareto front',
@@ -173,8 +179,8 @@ function drawChart() {
             title: 'f' + '2'.sub() + '(x)'
         },
         legend: 'none',
-        width: $(mainWidth).width(),
-        height: 500
+        width: $(mainWidth).width(), //pega a largura do main
+        height: 400
     };
 
     var chart = new google.visualization.ScatterChart(document.getElementById('response_plot'));
