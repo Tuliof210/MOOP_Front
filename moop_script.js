@@ -1,6 +1,10 @@
 var place_response = document.querySelector('.response-place')
 var closemodal = document.querySelector('#closemodal')
 
+var data; //grava o json
+
+
+
 google.charts.load('current', {
     'packages': ['corechart']
 });
@@ -77,7 +81,7 @@ function sendRequest() {
 
     xhr.onload = async function() {
 
-        var data = await JSON.parse(this.responseText);
+        data = await JSON.parse(this.responseText);
         // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
         //resultElement.innerHTML = JSON.stringify(data["x"]);
 
@@ -86,44 +90,9 @@ function sendRequest() {
 
         try {
             //colocar o try antes de usar os dados!!
-            var line_x = data.fx[0]
-            var line_y = data.fx[1]
-
-            var entrada_grafico = [];
-            entrada_grafico.push(['x', ''])
-
-            for (let i in line_x) {
-                let x = []
-                x.push(line_x[i])
-                x.push(line_y[i])
-                entrada_grafico.push(x)
-            }
-
-            console.log(line_x)
-            console.log(line_y)
-
-            var grafico = google.visualization.arrayToDataTable(entrada_grafico);
-
-            var options = {
-                title: 'Pareto front',
-                hAxis: {
-                    title: 'f' + '1'.sub() + '(x)'
-                },
-                vAxis: {
-                    title: 'f' + '2'.sub() + '(x)'
-                },
-                legend: 'none',
-                width: 740,
-                height: 400
-            };
-
-            var chart = new google.visualization.ScatterChart(document.getElementById('response_plot'));
-
-            chart.draw(grafico, options);
-
-            place_response.classList.remove("response-place")
+            drawChart();
             showloader();
-            callback()
+            callback();
 
         } catch (e) {
 
@@ -170,4 +139,47 @@ function showloader() {
     } else {
         a.innerHTML = 'Solve'
     }
+}
+
+window.onresize = function() {
+    drawChart()
+}
+
+
+function drawChart() {
+    var line_x = data.fx[0]
+    var line_y = data.fx[1]
+
+    var entrada_grafico = [];
+    entrada_grafico.push(['x', ''])
+
+    for (let i in line_x) {
+        let x = []
+        x.push(line_x[i])
+        x.push(line_y[i])
+        entrada_grafico.push(x)
+    }
+
+    var grafico = google.visualization.arrayToDataTable(entrada_grafico);
+
+    var mainWidth = document.getElementsByTagName('main')
+
+    var options = {
+        title: 'Pareto front',
+        hAxis: {
+            title: 'f' + '1'.sub() + '(x)'
+        },
+        vAxis: {
+            title: 'f' + '2'.sub() + '(x)'
+        },
+        legend: 'none',
+        width: $(mainWidth).width(),
+        height: 500
+    };
+
+    var chart = new google.visualization.ScatterChart(document.getElementById('response_plot'));
+
+    chart.draw(grafico, options);
+
+    place_response.classList.remove("response-place")
 }
