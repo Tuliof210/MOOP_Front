@@ -40,11 +40,6 @@ function sendRequest() {
     showloader();
     AddResponsePlace();
 
-    let resultElement = document.getElementById('response');
-    let errorElement = document.getElementById('error');
-    //resultElement.innerHTML = null;
-    //errorElement.innerHTML = null;
-
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://ii51sclb36.execute-api.us-east-1.amazonaws.com/default/Moop");
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -58,6 +53,7 @@ function sendRequest() {
 
     let x_min_value = [];
     let x_max_value = [];
+
     for (let i = 1; i <= n_value; i++) {
         if (document.getElementById('x_min_' + i).value) {
             x_min_value.push(parseFloat(document.getElementById('x_min_' + i).value));
@@ -82,8 +78,6 @@ function sendRequest() {
     xhr.onload = async function() {
 
         data = await JSON.parse(this.responseText);
-        // resultElement.innerHTML =  "Stop criterion: " + JSON.stringify(data["message"]) + "<br>" + "x* = " + JSON.stringify(data["x"])  + "<br>" + "f(x*) = " + JSON.stringify(data["fx"]) ;
-        //resultElement.innerHTML = JSON.stringify(data["x"]);
 
         console.log(this.responseText)
         console.log(data)
@@ -173,10 +167,10 @@ function drawChart() {
     var options = {
         title: 'Pareto front',
         hAxis: {
-            title: 'f' + '1'.sub() + '(x)'
+            title: 'f1(x)'
         },
         vAxis: {
-            title: 'f' + '2'.sub() + '(x)'
+            title: 'f2(x)'
         },
         legend: 'none',
         width: $(mainWidth).width(), //pega a largura do main
