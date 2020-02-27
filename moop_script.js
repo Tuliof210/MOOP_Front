@@ -169,10 +169,10 @@ function drawChart() {
     var options = {
         title: 'Pareto front',
         hAxis: {
-            title: 'f1(x)'
+            title: 'f₁(x)'
         },
         vAxis: {
-            title: 'f2(x)'
+            title: 'f₂(x)'
         },
         legend: 'none',
         width: $(mainWidth).width(), //pega a largura do main
