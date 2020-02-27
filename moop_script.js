@@ -37,7 +37,7 @@ function myFunction() {
 
 function sendRequest() {
 
-    showloader();
+    showloader(); //adiciona efeito de loading
     AddResponsePlace();
 
     var xhr = new XMLHttpRequest();
@@ -85,15 +85,16 @@ function sendRequest() {
         try {
             //colocar o try antes de usar os dados!!
             drawChart();
-            showloader();
+            showloader(); //remove efeito de loading
             callback();
 
         } catch (e) {
 
             let errobody = document.querySelector('.modal-body')
-            errobody.innerHTML = 'There was a rendering error'
-                //Modal irá aparecer sem necessidade de um botão
-            showloader();
+            errobody.innerHTML = 'There was a rendering error';
+            //Modal irá aparecer sem necessidade de um botão
+
+            showloader(); //remove efeito de loading
             $(document).ready(function(e) {
                 jQuery('#myModal').modal();
             });
@@ -103,9 +104,10 @@ function sendRequest() {
     xhr.onerror = function(e) {
         let errobody = document.querySelector('.modal-body')
 
-        errobody.innerHTML = 'There was an unexpected error'
-            //Modal irá aparecer sem necessidade de um botão
-        showloader();
+        errobody.innerHTML = 'There was an unexpected error';
+        //Modal irá aparecer sem necessidade de um botão
+
+        showloader(); //remove efeito de loading
         $(document).ready(function(e) {
             jQuery('#myModal').modal();
         });
